@@ -22,7 +22,7 @@ def getResult(input: str):
     
     result = [{'text': 'I love trout!', 'external_id': None, 'error': False, 'classifications': [{'tag_name': 'Increase in population', 'tag_id': 124263161, 'confidence': 0.722}]}, 
     {'text': 'I love trout!', 'external_id': None, 'error': False, 'classifications': [{'tag_name': 'Decrease in population', 'tag_id': 124263161, 'confidence': 0.722}]},
-    {'text': 'I love trout!', 'external_id': None, 'error': False, 'classifications': [{'tag_name': 'No change in population', 'tag_id': 124263161, 'confidence': 0.722}]}]
+    {'text': 'I love trout!', 'external_id': None, 'error': False, 'classifications': [{'tag_name': 'Neutral effect on population', 'tag_id': 124263161, 'confidence': 0.722}]}]
     result = result[random.randint(0, 2)]
 
     # - uncomment for actual purposes
