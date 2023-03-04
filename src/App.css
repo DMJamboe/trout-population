@@ -126,7 +126,7 @@ span {
   height: 20px;
   background-size: contain;
   background-color: white;
-  animation: wave linear 40s infinite;
+  animation: wave linear 10s infinite;
 }
 
 .deep-water {
@@ -139,7 +139,7 @@ span {
     background-position: 0px 0px;
   }
   to {
-    background-position: 3000px 0px;
+    background-position: 1200px 0px;
   }
 }
 
@@ -152,5 +152,20 @@ span {
   }
   100% {
     transform: translateY(2%);
+  }
+}
+
+.fish {
+  animation: MoveUpDown 3s ease-in-out infinite;
+  opacity: 0.5;
+  background-size: 50% 50%;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
   }
 }
