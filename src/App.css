@@ -111,7 +111,7 @@ span {
   height: 20px;
   background-size: contain;
   background-color: white;
-  animation: wave linear 40s infinite;
+  animation: wave linear 10s infinite;
 }
 
 .deep-water {
@@ -124,7 +124,7 @@ span {
     background-position: 0px 0px;
   }
   to {
-    background-position: 3000px 0px;
+    background-position: 1200px 0px;
   }
 }
 
