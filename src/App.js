@@ -1,4 +1,7 @@
 import logo from './logo.png';
+import sillyHatLogo from './silly-hat.png';
+import sillyHatLogo2 from './silly-hat2.png';
+import sillyHatLogo3 from './silly-hat3.png';
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, AreaChart, Area, LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 import './App.css';
@@ -7,6 +10,8 @@ let current = 10000;
 
 let currentFish = 1;
 let minfish = 1;
+let sillyHatMode = false;
+let sillyHatNo = 0;
 
 function App() {
   
@@ -35,6 +40,9 @@ function App() {
   function getInput() {
     console.log("IGFG")
     setInput(document.getElementById("input-text").value);
+  };
+  function sillyHat() {
+    sillyHatMode = !sillyHatMode;
   };
   function generateRandom(min, max) {
 
@@ -70,6 +78,18 @@ function App() {
       // add fish image
       var newFish = document.createElement("img");
       newFish.src = logo;
+      if (sillyHatMode) {
+        if (sillyHatNo === 0) {
+          newFish.src = sillyHatLogo;
+          sillyHatNo++;
+        } else if (sillyHatNo === 1) {
+          newFish.src = sillyHatLogo2;
+          sillyHatNo++;
+        } else if (sillyHatNo === 2) {
+          newFish.src = sillyHatLogo3;
+          sillyHatNo = 0;
+        }
+      }
       newFish.id = currentFish;
 
       var fishStyle = "position:absolute; left:";
@@ -105,6 +125,7 @@ function App() {
         <h1>Trout Population Forecast</h1>
       </div>
       <div className="App-input">
+      <input type="button" value="Toggle Silly Hat" onClick={sillyHat}></input>
         <div className="input-inline">
           <input type="text" id="input-text" placeholder="Write something here..."></input>
           <input type="button" value="Forecast" onClick={getInput}></input>
@@ -116,7 +137,7 @@ function App() {
           <span className="deep-water"></span>
         </div>
       </div>
-      <div class="Stocks" style={{zIndex:1, position: 'relative', top: -100, marginBottom: -10000}}>
+      <div className="Stocks" style={{zIndex:1, position: 'relative', top: -100, marginBottom: -10000}}>
         <ResponsiveContainer width="100%" height={100}>
           <AreaChart width={600} height={500} data={graphData} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <Area type="monotone" dataKey="population" stroke="#134285" fill="#134285" fillOpacity={1}/>
