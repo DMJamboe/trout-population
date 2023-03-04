@@ -5,6 +5,7 @@ import './App.css';
 let data = [{time: 1, population: 10000},{time: 1, population: 240000},{time: 2, population: 270000}];
 
 let currentFish = 1;
+let minfish = 1;
 
 function App() {
   
@@ -19,8 +20,8 @@ function App() {
         const tag = data.tag;
         const confidence = data.confidence;
         switch (tag) {
-          case "Decrease in population": changeWaterLevel('low'); break;
-          case "Increase in population": changeWaterLevel('high'); break;
+          case "Decrease in population": changeWaterLevel('low'); updateFish("decrease in population"); break;
+          case "Increase in population": changeWaterLevel('high'); updateFish("increase in population"); break;
           case "Neutral effect on population": changeWaterLevel('neutral'); break;
         }
       }).catch(err => {
@@ -30,8 +31,6 @@ function App() {
   }, [input]);
   function getInput() {
     setInput(document.getElementById("input-text").value);
-    //updateFish("increase in population");
-    //updateFish("decrease in population");
   };
   function generateRandom(min, max) {
 
@@ -84,12 +83,15 @@ function App() {
       //removeFish()
       
       // decrement number of fish
-      currentFish--;
+      if (currentFish > minfish){
+        currentFish--;
 
-      const fish = document.getElementById(currentFish);
-      fish.remove();
+        const fish = document.getElementById(currentFish);
+        fish.remove();
+      }
 
 
+      
     }
   };
   
