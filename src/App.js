@@ -2,10 +2,12 @@ import logo from './logo.svg';
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, AreaChart, Area, LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 import './App.css';
-let data = [{time: 1, population: 10000},{time: 1, population: 240000},{time: 2, population: 270000}];
+let data = [{population: 10000},{population: 10000}];
+let current = 10000;
 
 function App() {
   const [input, setInput] = useState("");
+  const [graphData, setGraphData] = useState([{population: 10000},{population: 10000}]);
   useEffect(() => {
     if (input.length) {
       fetch(`http://127.0.0.1:8000/classify/"${input}"`, {method: "GET", mode: "cors"}).then(response => {
@@ -13,12 +15,13 @@ function App() {
           return response.json();
         }
       }).then(data => {
+        console.log(data.tag)
         const tag = data.tag;
         const confidence = data.confidence;
         switch (tag) {
-          case "Decrease in population": changeWaterLevel('low'); break;
-          case "Increase in population": changeWaterLevel('high'); break;
-          case "Neutral effect on population": changeWaterLevel('neutral'); break;
+          case "Decrease in population": changeWaterLevel('low'); setGraphData(oldData => [...oldData, {population: current - 6000*confidence}]); console.log(graphData); break; 
+          case "Increase in population": changeWaterLevel('high'); setGraphData(oldData => [...oldData, {population: current + (Math.ceil(Math.random() * 500) * (Math.round(Math.random()) ? 1 : -1))*confidence}]);console.log(graphData); break;
+          case "Neutral effect on population": changeWaterLevel('neutral'); setGraphData(oldData => [...oldData, {population: current + 6000*confidence}]); console.log(graphData); break;
         }
       }).catch(err => {
         alert(err);
@@ -26,6 +29,7 @@ function App() {
     }
   }, [input]);
   function getInput() {
+    console.log("IGFG")
     setInput(document.getElementById("input-text").value);
   };
   
@@ -46,13 +50,10 @@ function App() {
           <span class="deep-water"></span>
         </div>
       </div>
-      <div class="Stocks">
-        <ResponsiveContainer width="100%" height={400}>
-          <AreaChart width={600} height={300} data={data}>
+      <div class="Stocks" style={{zIndex:1, position: 'relative', top: -100, marginBottom: -10000}}>
+        <ResponsiveContainer width="100%" height={100}>
+          <AreaChart width={600} height={500} data={graphData} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <Area type="monotone" dataKey="population" stroke="#134285" fill="#134285" fillOpacity={1}/>
-            {/*<CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
-            <YAxis />*/}
           </AreaChart>
         </ResponsiveContainer>
       </div>
