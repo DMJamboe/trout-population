@@ -1,0 +1,5 @@
+    to run the backend:
+    navigate to backend
+    run command 
+        uvicorn sentiment:app --reload
+    done!
