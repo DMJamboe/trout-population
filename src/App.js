@@ -8,7 +8,21 @@ function App() {
   const [input, setInput] = useState("");
   useEffect(() => {
     if (input.length) {
-      alert(input);
+      fetch(`http://127.0.0.1:8000/classify/"${input}"`, {method: "GET", mode: "cors"}).then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      }).then(data => {
+        const tag = data.tag;
+        const confidence = data.confidence;
+        switch (tag) {
+          case "Decrease in population": changeWaterLevel('low'); break;
+          case "Increase in population": changeWaterLevel('high'); break;
+          case "Neutral effect on population": changeWaterLevel('neutral'); break;
+        }
+      }).catch(err => {
+        alert(err);
+      });
     }
   }, [input]);
   function getInput() {
@@ -27,7 +41,7 @@ function App() {
         </div>
       </div>
       <div class="App-water">
-        <div class="water-wave">
+        <div class="water-wave neutral" id="water-wave">
           <span class="wave"></span>
           <span class="deep-water"></span>
         </div>
@@ -44,6 +58,10 @@ function App() {
       </div>
     </div>    
   );
+}
+
+function changeWaterLevel(level) {
+  document.getElementById("water-wave").setAttribute("class", `water-wave ${level}`);
 }
 
 export default App;
