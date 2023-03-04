@@ -1,6 +1,8 @@
 import logo from './logo.png';
 import { useEffect, useState } from "react";
+import { ResponsiveContainer, AreaChart, Area, LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 import './App.css';
+let data = [{time: 1, population: 10000},{time: 1, population: 240000},{time: 2, population: 270000}];
 
 let currentFish = 1;
 
@@ -9,7 +11,21 @@ function App() {
   const [input, setInput] = useState("");
   useEffect(() => {
     if (input.length) {
-      alert(input);
+      fetch(`http://127.0.0.1:8000/classify/"${input}"`, {method: "GET", mode: "cors"}).then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      }).then(data => {
+        const tag = data.tag;
+        const confidence = data.confidence;
+        switch (tag) {
+          case "Decrease in population": changeWaterLevel('low'); break;
+          case "Increase in population": changeWaterLevel('high'); break;
+          case "Neutral effect on population": changeWaterLevel('neutral'); break;
+        }
+      }).catch(err => {
+        alert(err);
+      });
     }
   }, [input]);
   function getInput() {
@@ -89,14 +105,27 @@ function App() {
         </div>
       </div>
       <div className="App-water">
-        <div className="water-wave" id="water-wave">
+        <div className="water-wave neutral" id="water-wave">
           <span className="wave"></span>
           <span className="deep-water"></span>
         </div>
       </div>
-    </div>
-       
+      <div class="Stocks">
+        <ResponsiveContainer width="100%" height={400}>
+          <AreaChart width={600} height={300} data={data}>
+            <Area type="monotone" dataKey="population" stroke="#134285" fill="#134285" fillOpacity={1}/>
+            {/*<CartesianGrid stroke="#ccc" />
+            <XAxis dataKey="name" />
+            <YAxis />*/}
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>    
   );
+}
+
+function changeWaterLevel(level) {
+  document.getElementById("water-wave").setAttribute("class", `water-wave ${level}`);
 }
 
 export default App;
