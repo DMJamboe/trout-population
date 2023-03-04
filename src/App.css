@@ -1,3 +1,7 @@
+:root {
+  --wave-height: 10%;
+}
+
 .App {
   text-align: center;
 }
@@ -15,24 +19,123 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 5%;
+  max-height: 5%;
   display: flex;
+  flex: 0 1 auto;
   flex-direction: column;
   align-items: center;
+  vertical-align: top;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-input {
+  background-color: whitesmoke;
+  min-height: 10%;
+  max-height: 10%;
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: top;
+  justify-content: center;
+  font-size: calc(8px + 1vmin);
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
-@keyframes App-logo-spin {
+input[type=text] {
+  width: 90vw;
+  padding: 5px 0px;
+  margin-left: 1%;
+  background-color: whitesmoke;
+  border: none;
+  font-size: 16px;
+}
+
+input:focus[type=text] {
+  border: none;
+  outline: none;
+}
+
+input[type=button] {
+  background: darkslategrey;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 50%;
+  border: none;
+}
+
+input[type=button]:hover {
+  background: rgb(64, 90, 90);
+  cursor: pointer;
+}
+
+input[type=button]:active {
+  box-shadow: inset;
+}
+
+.input-inline {
+  display: flex;
+  flex-direction: row;
+}
+
+.App-water {
+  background-color: white;
+  display: flex;
+  flex: 1 1 auto;
+  overflow: auto;
+  height: 85vh;
+  align-items: center;
+  z-index: -1;
+  align-self: flex-end;
+  overflow: hidden;
+}
+
+span {
+  display: block;
+  width: 100%;
+}
+.water-wave {
+  height: 100%;
+  width: 100%;
+  animation: water 4s infinite;
+  transition: ease-in-out;
+}
+
+.wave {
+  background: url("wave-image.png");
+  opacity: 80%;
+  height: 20px;
+  background-size: contain;
+  background-color: white;
+  animation: wave linear 40s infinite;
+}
+
+.deep-water {
+  background: linear-gradient(180deg, #3286ff 0%, #134285 100%);
+  height: 100%;
+}
+
+@keyframes wave {
   from {
-    transform: rotate(0deg);
+    background-position: 0px 0px;
   }
   to {
-    transform: rotate(360deg);
+    background-position: 3000px 0px;
+  }
+}
+
+@keyframes water {
+  0% {
+    transform: translateY(calc(var(--wave-height) + 2%));
+  }
+  50% {
+    transform: translateY(var(--wave-height));
+  }
+  100% {
+    transform: translateY(calc(var(--wave-height) + 2%));
   }
 }
