@@ -12,6 +12,7 @@ function App() {
   function getInput() {
     setInput(document.getElementById("input-text").value);
   };
+  
   return (
     <div>
       <div class="App-header">

@@ -101,12 +101,12 @@ span {
 .water-wave {
   height: 100%;
   width: 100%;
-  animation: water 1s infinite;
+  animation: water 4s infinite;
   transition: ease-in-out;
 }
 
 .wave {
-  background: url("https://i.imgur.com/iB315o9.png");
+  background: url("wave-image.png");
   opacity: 80%;
   height: 20px;
   background-size: contain;
@@ -115,7 +115,7 @@ span {
 }
 
 .deep-water {
-  background-color: #3286ff;
+  background: linear-gradient(180deg, #3286ff 0%, #134285 100%);
   height: 100%;
 }
 
@@ -130,12 +130,12 @@ span {
 
 @keyframes water {
   0% {
-    transform: translateY(calc(var(--wave-height) + 1%));
+    transform: translateY(calc(var(--wave-height) + 2%));
   }
   50% {
     transform: translateY(var(--wave-height));
   }
   100% {
-    transform: translateY(calc(var(--wave-height) + 1%));
+    transform: translateY(calc(var(--wave-height) + 2%));
   }
 }
